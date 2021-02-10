@@ -11,7 +11,8 @@ var app = new Vue({
   el: '#app',
   data: {
 
-    movieArray: [],
+    movies: [],
+    tvSeries: [],
     selected: '',
     flags: []
 
@@ -19,7 +20,7 @@ var app = new Vue({
 
   methods: {
 
-    searchMovie: function() {
+    getMovies: function() {
       const self = this;
 
       axios
@@ -27,9 +28,27 @@ var app = new Vue({
       .then(function(resp) {
         const movie = resp.data.results;
         console.log(movie);
-        self.movieArray = movie;
+        self.movies = movie;
 
-        self.movieArray.forEach(function(item) {
+        self.movies.forEach(function(item) {
+          if(!self.flags.includes(item.original_language)) {
+            self.flags.push(item.original_language)
+          }
+        })
+
+      });
+    },
+    getTvSeries: function() {
+      const self = this;
+
+      axios
+      .get('https://api.themoviedb.org/3/search/tv?api_key=1a20e46ffbcbc0628119863e1c4600e8&query=' + self.selected)
+      .then(function(resp) {
+        const tvSerie = resp.data.results;
+        console.log(tvSerie);
+        self.tvSeries = tvSerie;
+
+        self.tvSeries.forEach(function(item) {
           if(!self.flags.includes(item.original_language)) {
             self.flags.push(item.original_language)
           }
@@ -40,6 +59,12 @@ var app = new Vue({
     voteAverage: function(item) {
       return Math.round(item / 2);
     },
+    search: function() {
+      if (this.selected !== '') {
+        this.getMovies();
+        this.getTvSeries();
+      }
+    }
 
   }
 

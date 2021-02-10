@@ -17,26 +17,34 @@
 <body>
   <div id="app">
 
+
+    <!-- search bar -->
     <header>
       <div class="container">
       </div>
       <div class="select">
-        <input placeholder="Search a movie" type="text" v-model="selected" @keyup.enter="searchMovie()">
-        <button type="button" name="button" @click="searchMovie()">Search</button>
+        <input placeholder="Search a movie" type="text" v-model="selected" @keyup.enter="search()">
+        <button type="button" name="button" @click="search()">Search</button>
       </div>
     </header>
+    <!-- end search bar -->
 
+    <!-- movies section -->
     <div class="movies-container main-container">
 
-      <div class="movie" v-for="item in movieArray">
+      <div class="section-title" v-if="movies != '' ">
+        <h1>Movies</h1>
+      </div>
+      <!-- <div class="section-title" v-else="movies = '' ">
+        <h1>No movies to show...yet!</h1>
+      </div> -->
+
+      <div class="movie" v-for="item in movies">
         <span>Title: <a>{{item.title}}</a></span>
         <span>Original title: <a>{{item.original_title}}</a></span>
         <span>Original language:</span>
         <span v-if="flags.includes(item.original_language)">
-          <img class="flag" :src="'img/flags/' + item.original_language + '.png'"alt="">
-        </span>
-        <span v-else>
-          {{item.original_language}}
+          <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
         </span>
         <span>Vote:
           <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
@@ -44,6 +52,32 @@
         </span>
       </div>
     </div>
+    <!-- end movies section -->
+
+    <!-- tv series section -->
+    <div class="movies-container main-container">
+
+        <div class="section-title" v-if="tvSeries != '' ">
+          <h1>TV Series</h1>
+        </div>
+        <!-- <div class="section-title" v-else="movies = '' ">
+          <h1>No TV Series to show...yet!</h1>
+        </div> -->
+
+      <div class="movie" v-for="item in tvSeries">
+        <span>Title: <a>{{item.name}}</a></span>
+        <span>Original title: <a>{{item.original_name}}</a></span>
+        <span>Original language:</span>
+        <span v-if="flags.includes(item.original_language)">
+          <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
+        </span>
+        <span>Vote:
+          <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
+          <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>
+        </span>
+      </div>
+    </div>
+    <!-- end tv series section -->
 
   </div>
 
