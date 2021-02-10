@@ -23,7 +23,7 @@
       <div class="container">
       </div>
       <div class="select">
-        <input placeholder="Search a movie" type="text" v-model="selected" @keyup.enter="search()">
+        <input placeholder="Search a movie or a TV series" type="text" v-model="selected" @keyup.enter="search()">
         <button type="button" name="button" @click="search()">Search</button>
       </div>
     </header>
@@ -39,17 +39,33 @@
         <h1>No movies to show...yet!</h1>
       </div> -->
 
-      <div class="movie" v-for="item in movies">
-        <span>Title: <a>{{item.title}}</a></span>
-        <span>Original title: <a>{{item.original_title}}</a></span>
-        <span>Original language:</span>
-        <span v-if="flags.includes(item.original_language)">
-          <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
-        </span>
-        <span>Vote:
-          <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
-          <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>
-        </span>
+
+      <div class="content" v-for="item in movies">
+
+        <!-- poster -->
+        <div class="poster-container" v-if="item.poster_path != null">
+          <img class="poster" :src="posterUrl + item.poster_path" alt="">
+        </div>
+        <!-- end poster -->
+
+        <!-- info and overview -->
+        <div class="info-and-overview">
+          <span>Title: <a>{{item.title}}</a></span>
+          <span>Original title: <a>{{item.original_title}}</a></span>
+          <span>Original language:</span>
+          <span v-if="flags.includes(item.original_language)">
+            <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
+          </span>
+          <span>Vote:
+            <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
+            </i>
+            <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
+            </i>
+          </span>
+        </div>
+        <!-- end info and overview -->
+
+
       </div>
     </div>
     <!-- end movies section -->
@@ -57,24 +73,35 @@
     <!-- tv series section -->
     <div class="movies-container main-container">
 
-        <div class="section-title" v-if="tvSeries != '' ">
-          <h1>TV Series</h1>
-        </div>
-        <!-- <div class="section-title" v-else="movies = '' ">
+      <div class="section-title" v-if="tvSeries != '' ">
+        <h1>TV Series</h1>
+      </div>
+      <!-- <div class="section-title" v-else="movies = '' ">
           <h1>No TV Series to show...yet!</h1>
         </div> -->
 
-      <div class="movie" v-for="item in tvSeries">
-        <span>Title: <a>{{item.name}}</a></span>
-        <span>Original title: <a>{{item.original_name}}</a></span>
-        <span>Original language:</span>
-        <span v-if="flags.includes(item.original_language)">
-          <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
-        </span>
-        <span>Vote:
-          <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
-          <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>
-        </span>
+      <div class="content" v-for="item in tvSeries">
+
+        <!-- poster -->
+        <div class="poster-container" v-if="item.poster_path != null">
+          <img class="poster" :src="posterUrl + item.poster_path" alt="">
+        </div>
+        <!-- end poster -->
+
+        <!-- info and overview -->
+        <div class="info-and-overview">
+          <span>Title: <a>{{item.name}}</a></span>
+          <span>Original title: <a>{{item.original_name}}</a></span>
+          <span>Original language:</span>
+          <span v-if="flags.includes(item.original_language)">
+            <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
+          </span>
+          <span>Vote:
+            <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
+            <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>
+          </span>
+        </div>
+        <!-- end info and overview -->
       </div>
     </div>
     <!-- end tv series section -->
