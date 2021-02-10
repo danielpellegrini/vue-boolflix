@@ -31,7 +31,13 @@
       <div class="movie" v-for="item in movieArray">
         <span>Title: <a>{{item.title}}</a></span>
         <span>Original title: <a>{{item.original_title}}</a></span>
-        <span>Original language: <a>{{item.original_language}}</a></span>
+        <span>Original language:</span>
+        <span v-if="flags.includes(item.original_language)">
+          <img class="flag" :src="'img/flags/' + item.original_language + '.png'"alt="">
+        </span>
+        <span v-else>
+          {{item.original_language}}
+        </span>
         <span>Vote:
           <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
           <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>

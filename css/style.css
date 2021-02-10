@@ -65,3 +65,8 @@ header>.select>input, header>.select>button {
   background-color: inherit;
   opacity: .5;
 }
+
+.flag {
+  height: 20px;
+  margin-top: 5px;
+}

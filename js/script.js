@@ -12,7 +12,8 @@ var app = new Vue({
   data: {
 
     movieArray: [],
-    selected: ''
+    selected: '',
+    flags: []
 
   },
 
@@ -28,12 +29,17 @@ var app = new Vue({
         console.log(movie);
         self.movieArray = movie;
 
+        self.movieArray.forEach(function(item) {
+          if(!self.flags.includes(item.original_language)) {
+            self.flags.push(item.original_language)
+          }
+        })
+
       });
     },
     voteAverage: function(item) {
       return Math.round(item / 2);
-    }
-
+    },
 
   }
 
