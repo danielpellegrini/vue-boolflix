@@ -21,7 +21,7 @@ body {
 header {
     width: 100%;
     height: 70px;
-    background: rgb(46, 58, 70);
+    background: #111;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,33 +47,21 @@ header>.select>input, header>.select>button {
     justify-content: flex-end;
     align-items: center;
     flex-direction: column;
-    flex-basis: 200px;
+    flex-basis: 250px;
     padding: 20px;
     margin: 10px 20px;
     height: 360px;
-    background: rgb(46, 58, 70);
+    background: #111;
+    color: inherit;
+    border: 1px solid white;
     text-align: center;
 }
 
-.movie img {
-    max-width: 100%;
+.movie>span {
+  background-color: inherit;
+  color: #FFFFFF;
 }
-
-.movie h3 {
-    margin: 10px 0;
-    color: white;
-    font-size: 1em;
-    text-transform: uppercase;
-}
-.movie span {
-  margin: 10px 0;
-}
-
-.movie span.original-title {
-    color: grey;
-    font-size: 1em;
-}
-
-.movie span.original-language {
-    color: grey;
+.movie>span>a {
+  background-color: inherit;
+  opacity: .5;
 }

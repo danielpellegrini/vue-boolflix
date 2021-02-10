@@ -1,41 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
+  <link rel="stylesheet" href="css/style.css">
 
-    <title>Boolflix</title>
-  </head>
-  <body>
-    <div id="app">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
 
-      <header>
-        <div class="container">
-        </div>
-        <div class="select">
-          <input placeholder="Search a movie" type="text" v-model="selected" @keyup.enter="searchMovie()">
-          <button type="button" name="button" @click="searchMovie()">Search</button>
-        </div>
-      </header>
+  <title>Boolflix</title>
+</head>
 
-      <div class="movies-container main-container">
+<body>
+  <div id="app">
 
-        <div class="movie" v-for="item in movieArray" >
-            <h3>{{item.title}}</h3>
-            <span class="original-title">{{item.original_title}}</span>
-            <span class="original-language">Original language: {{item.original_language}}</span>
-            <span class="vote-average">Vote: {{item.vote_average}}/10</span>
-        </div>
+    <header>
+      <div class="container">
       </div>
+      <div class="select">
+        <input placeholder="Search a movie" type="text" v-model="selected" @keyup.enter="searchMovie()">
+        <button type="button" name="button" @click="searchMovie()">Search</button>
+      </div>
+    </header>
 
+    <div class="movies-container main-container">
+
+      <div class="movie" v-for="item in movieArray">
+        <span>Title: <a>{{item.title}}</a></span>
+        <span>Original title: <a>{{item.original_title}}</a></span>
+        <span>Original language: <a>{{item.original_language}}</a></span>
+        <span>Vote:
+          <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
+          <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>
+        </span>
+      </div>
     </div>
 
+  </div>
 
-    <script src="js/script.js" charset="utf-8"></script>
-  </body>
+
+  <script src="js/script.js" charset="utf-8"></script>
+</body>
+
 </html>

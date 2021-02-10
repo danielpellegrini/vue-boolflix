@@ -28,9 +28,13 @@ var app = new Vue({
         console.log(movie);
         self.movieArray = movie;
 
-
       });
+    },
+    voteAverage: function(item) {
+      return Math.round(item / 2);
     }
+
+
   }
 
 });
