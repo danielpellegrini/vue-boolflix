@@ -19,29 +19,56 @@ body {
 }
 
 header {
-  background: #111;
+  justify-content: space-between;
 }
 
 header, .section-title {
-    width: 100%;
+    width: calc(100% - 15px);
     height: 70px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    margin: 15px;
+}
+
+.section-title {
+  justify-content: center;
 }
 
 header>.select {
-  width: 30%;
+  width: 25%;
 }
 
 header>.select>input, header>.select>button {
   font-size: 1.5em;
   padding: 10px;
-  margin-right: 10px;
+  margin: 0 10px;
+  outline: none;
+}
+
+.select>.fa-search {
+  color: #FFFFFF;
+  cursor: pointer;
+  font-size: 1.7em;
 }
 
 input {
-  width: 60%;
+  width: 0;
+  /* transition: width 0.5s; */
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.active {
+  transition: all 0.5s;
+  opacity: 1;
+}
+
+.growing {
+  width: 80%;
+  transition: all 0.5s;
 }
 
 .movies-container {
@@ -53,35 +80,62 @@ input {
 }
 
 .content {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex-direction: column;
-    flex-basis: 250px;
-    margin: 10px 20px;
-    height: 360px;
-    background: #111;
-    color: inherit;
-    border: 1px solid white;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-basis: 342px;
+  margin: 10px 20px;
+  height: 513px;
+  background: #111;
+  color: inherit;
+  border: 1px solid white;
+  text-align: center;
+  position: relative;
 }
 
 .flag {
-  height: 20px;
-  margin-top: 5px;
+  height: 15px;
+  /* margin-top: 5px; */
 }
 .poster-container {
   overflow: hidden;
+  /* vertical-align: middle; */
 }
 
-.poster {
+.poster, .poster-placeholder {
   width: 100%;
   height: 100%;
-  display: block;
-  margin: auto;
 
 }
 
-.info-and-overview {
-  display: none;
+.info {
+  color: #FFFFFF;
+  text-align: left;
+  position: absolute;
+  transition: all 500ms;
+  opacity: 0;
+  height: 100%;
+  width: 100%;
+  padding: 15px;
+}
+
+.visible:hover {
+  transition: all 500ms;
+  opacity: 1;
+}
+
+.info>ul {
+  list-style-type: none;
+}
+
+.info>ul>li>span {
+  font-weight: bold;
+}
+
+
+
+
+.fas, .far {
+  color: #F9BB08;
 }

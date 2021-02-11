@@ -7,10 +7,16 @@ var app = new Vue({
     tvSeries: [],
     selected: '',
     flags: [],
+    index: 0,
     //images
-    posterUrl: 'https://image.tmdb.org/t/p/w342'
+    posterUrl: 'https://image.tmdb.org/t/p/w342',
+    // dynamic classes
+    isActive: false,
+    isHidden: true,
+    isGrowing: false,
 
   },
+
 
   methods: {
 
@@ -31,6 +37,14 @@ var app = new Vue({
             if (!this.flags.includes(item.original_language)) {
               this.flags.push(item.original_language)
             }
+          });
+          this.movies.forEach((item) => {
+            this.index = 0
+
+              if (this.index !== item.id) {
+                return this.index ++;
+              }
+
           });
 
         });
@@ -65,7 +79,14 @@ var app = new Vue({
         this.getMovies();
         this.getTvSeries();
       }
-    }
+    },
+    clicked: function() {
+      this.isActive = !this.isActive;
+      this.isHidden = !this.isHidden;
+      this.isGrowing = !this.isGrowing;
+    },
+
+
 
   },
   mounted() {
