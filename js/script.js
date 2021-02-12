@@ -7,13 +7,10 @@ var app = new Vue({
     tvSeries: [],
     selected: '',
     flags: [],
-    index: 0,
     //images
     posterUrl: 'https://image.tmdb.org/t/p/w342',
     // dynamic classes
     isActive: false,
-    isHidden: true,
-    isGrowing: false,
 
   },
 

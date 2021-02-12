@@ -23,23 +23,22 @@
       <div class="logo">
         <img src="img/logo.png" alt="Boolflix logo">
       </div>
-      <div class="select">
-        <i class="fas fa-search" @click="clicked()"></i>
-        <input placeholder="Search a movie or a TV series" type="text"
+      <div class="select"
+           :class="{active: isActive}">
+        <i class="fas fa-search"
+           @click="clicked()">
+        </i>
+        <input id="search-input"
+               placeholder="Search a movie or a TV series"
+               type="search"
                v-model="selected"
-               @keyup.enter="search()"
-               :class="{active: isActive, hidden: isHidden, growing: isGrowing}">
-        <!-- <button type="button" name="button"
-                @click="search()"
-                :class="{active: isActive, hidden: isHidden}">
-                Search
-        </button> -->
+               @keyup.enter="search()">
       </div>
     </header>
     <!-- end search bar -->
 
     <!-- movies section -->
-    <div class="movies-container main-container">
+    <div class="grid-container main-container">
 
       <div class="section-title" v-if="movies != '' ">
         <h1>Movies</h1>
@@ -47,69 +46,68 @@
       <!-- <div class="section-title" v-else="movies = '' ">
         <h1>No movies to show...yet!</h1>
       </div> -->
-
-
       <div class="content" v-for="(item, index) in movies">
+        <div class="content-container">
 
-        <!-- poster -->
-
-        <!-- <div class="poster-container"
-             v-if="item.poster_path != null"
-             @mouseover="hover = true"
-             @mouseleave="hover = false"
-             :class="{hidden: hover}">
-          <img class="poster" :src="posterUrl + item.poster_path" alt="">
-        </div> -->
-        <div class="poster-container"
-             v-if="item.poster_path != null" >
-          <img class="poster" :src="posterUrl + item.poster_path" alt="">
-        </div>
-        <div class="poster-container"
-             v-else="">
-          <img class="poster-placeholder" src="img/logo.png" alt="Boolflix logo">
-        </div>
-        <!-- end poster -->
-
-        <!-- info and overview -->
-        <div class="info visible">
-          <ul>
-            <li><span>Title: </span>{{item.title}}
-            </li>
-            <li><span>Original title: </span>{{item.original_title}}
-            </li>
-            <li><span>Original language: </span>
+          <!-- info and overview -->
+          <div class="info">
+            <ul>
+              <li><span>Title: </span>{{item.title}}
+              </li>
+              <li><span>Original title: </span>{{item.original_title}}
+              </li>
+              <li><span>Original language: </span>
                 <span v-if="flags.includes(!item.original_language)">
                   {{item.original_language}}
                 </span>
                 <span v-else>
                   <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
                 </span>
-            </li>
-            <li><span>Vote:
-                  <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
-                  </i>
-                  <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
-                  </i>
-                </span>
-            </li>
-            <li><span>Overview: </span> {{item.overview}}
-            </li>
-          </ul>
+              </li>
+              <li><span>Vote:
+                <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
+                </i>
+                <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
+                </i>
+              </span>
+              </li>
+              <li><span>Overview: </span> {{item.overview}}
+              </li>
+            </ul>
+          </div>
+          <!-- end info and overview -->
 
-
-
+          <!-- poster -->
+          <div class="poster-container hidden" v-if="item.poster_path != null">
+            <img class="poster" :src="posterUrl + item.poster_path" alt="">
+          </div>
+          <div class="poster-container poster-placeholder hidden" v-else="">
+            <div class="placeholder-container">
+              <img class="placeholder" src="img/logo.png" alt="Boolflix logo">
+              <ul>
+                <li>{{item.title}}</li>
+                <li><span>Language: </span>
+                  <span v-if="flags.includes(!item.original_language)">
+                    {{item.original_language}}
+                  </span>
+                  <span v-else>
+                    <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- end poster -->
 
 
         </div>
-        <!-- end info and overview -->
-
 
       </div>
     </div>
     <!-- end movies section -->
 
     <!-- tv series section -->
-    <div class="movies-container main-container">
+    <div class="grid-container main-container">
 
       <div class="section-title" v-if="tvSeries != '' ">
         <h1>TV Series</h1>
@@ -132,11 +130,17 @@
           <span>Original title: <a>{{item.original_name}}</a></span>
           <span>Original language:</span>
           <span v-if="flags.includes(item.original_language)">
-            <img class="flag" :src="'img/flags/' + item.original_language + '.png'" @error="$event.target.alt='file not found'">
+            <img class="flag"
+                 :src="'img/flags/' + item.original_language + '.png'"
+                 @error="$event.target.alt='file not found'">
           </span>
           <span>Vote:
-            <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star"></i>
-            <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star"></i>
+            <i v-for="item in voteAverage(item.vote_average)"
+               class="fas fa-star">
+            </i>
+            <i v-for="item in (5 - voteAverage(item.vote_average))"
+               class="far fa-star">
+            </i>
           </span>
         </div>
         <!-- end info and overview -->
