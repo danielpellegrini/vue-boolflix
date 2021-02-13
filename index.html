@@ -43,10 +43,8 @@
       <div class="section-title" v-if="movies != '' ">
         <h1>Movies</h1>
       </div>
-      <!-- <div class="section-title" v-else="movies = '' ">
-        <h1>No movies to show...yet!</h1>
-      </div> -->
-      <div class="content" v-for="(item, index) in movies">
+      <div class="content" v-for="item in movies">
+        <!-- cards container -->
         <div class="content-container">
 
           <!-- info and overview -->
@@ -99,9 +97,8 @@
           </div>
           <!-- end poster -->
 
-
         </div>
-
+        <!-- end cards container -->
       </div>
     </div>
     <!-- end movies section -->
@@ -112,38 +109,62 @@
       <div class="section-title" v-if="tvSeries != '' ">
         <h1>TV Series</h1>
       </div>
-      <!-- <div class="section-title" v-else="movies = '' ">
-          <h1>No TV Series to show...yet!</h1>
-        </div> -->
 
       <div class="content" v-for="item in tvSeries">
+        <!-- cards container -->
+        <div class="content-container">
+          <!-- info and overview -->
+          <div class="info">
+            <ul>
+              <li><span>Title: </span>{{item.name}}
+              </li>
+              <li><span>Original title: </span>{{item.original_name}}
+              </li>
+              <li><span>Original language: </span>
+                <span v-if="flags.includes(!item.original_language)">
+                  {{item.original_language}}
+                </span>
+                <span v-else>
+                  <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                </span>
+              </li>
+              <li><span>Vote:
+                <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
+                </i>
+                <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
+                </i>
+              </span>
+              </li>
+              <li><span>Overview: </span> {{item.overview}}
+              </li>
+            </ul>
+          </div>
+          <!-- end info and overview -->
 
-        <!-- poster -->
-        <div class="poster-container" v-if="item.poster_path != null">
-          <img class="poster" :src="posterUrl + item.poster_path" alt="">
+          <!-- poster -->
+          <div class="poster-container hidden" v-if="item.poster_path != null">
+            <img class="poster" :src="posterUrl + item.poster_path" alt="">
+          </div>
+          <div class="poster-container poster-placeholder hidden" v-else="">
+            <div class="placeholder-container">
+              <img class="placeholder" src="img/logo.png" alt="Boolflix logo">
+              <ul>
+                <li>{{item.name}}</li>
+                <li><span>Language: </span>
+                  <span v-if="flags.includes(!item.original_language)">
+                    {{item.original_language}}
+                  </span>
+                  <span v-else>
+                    <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- end poster -->
         </div>
-        <!-- end poster -->
+        <!-- end cards container -->
 
-        <!-- info and overview -->
-        <div v-else="">
-          <span>Title: <a>{{item.name}}</a></span>
-          <span>Original title: <a>{{item.original_name}}</a></span>
-          <span>Original language:</span>
-          <span v-if="flags.includes(item.original_language)">
-            <img class="flag"
-                 :src="'img/flags/' + item.original_language + '.png'"
-                 @error="$event.target.alt='file not found'">
-          </span>
-          <span>Vote:
-            <i v-for="item in voteAverage(item.vote_average)"
-               class="fas fa-star">
-            </i>
-            <i v-for="item in (5 - voteAverage(item.vote_average))"
-               class="far fa-star">
-            </i>
-          </span>
-        </div>
-        <!-- end info and overview -->
       </div>
     </div>
     <!-- end tv series section -->

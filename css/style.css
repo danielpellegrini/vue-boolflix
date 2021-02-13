@@ -128,7 +128,7 @@ header, .section-title {
   padding-bottom: 5px;
 }
 .placeholder-container>ul>li:last-of-type {
-  font-size: 1.3em;  
+  font-size: 1.3em;
 }
 
 .placeholder {
@@ -149,6 +149,7 @@ header, .section-title {
   width: 100%;
   padding: 15px;
   transition: all 500ms;
+  overflow: hidden;
 }
 
 .flag {
@@ -157,7 +158,7 @@ header, .section-title {
 
 .hidden:hover {
   transition: all 500ms;
-  opacity: .2;
+  opacity: 0.09;
 }
 
 .info>ul {
