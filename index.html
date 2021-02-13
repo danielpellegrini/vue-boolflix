@@ -62,14 +62,22 @@
                   <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
                 </span>
               </li>
-              <li><span>Vote:
+              <li>
+                <span>Vote:
                 <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
                 </i>
                 <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
                 </i>
               </span>
               </li>
-              <li><span>Overview: </span> {{item.overview}}
+              <li>
+                <span>Overview: </span> {{item.overview}}
+              </li>
+              <li v-if="item.cast.length != 0">
+                <span>Cast: </span> {{item.cast}}
+              </li>
+              <li v-else="">
+                <span>Cast not provided</span>
               </li>
             </ul>
           </div>
@@ -135,7 +143,14 @@
                 </i>
               </span>
               </li>
-              <li><span>Overview: </span> {{item.overview}}
+              <li>
+                <span>Overview: </span> {{item.overview}}
+              </li>
+              <li v-if="item.cast.length != 0">
+                <span>Cast: </span> {{item.cast}}
+              </li>
+              <li v-else="">
+                <span>Cast not provided</span>
               </li>
             </ul>
           </div>

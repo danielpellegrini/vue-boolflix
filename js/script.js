@@ -2,6 +2,7 @@
 var app = new Vue({
   el: '#app',
   data: {
+    api_key: '1a20e46ffbcbc0628119863e1c4600e8',
 
     movies: [],
     tvSeries: [],
@@ -22,36 +23,55 @@ var app = new Vue({
       axios
         .get('https://api.themoviedb.org/3/search/movie', {
           params: {
-            api_key: '1a20e46ffbcbc0628119863e1c4600e8',
+            api_key: this.api_key,
             query: this.selected
           }
         })
-        .then((resp) => {
+        .then(resp => {
+
           this.movies = resp.data.results;
 
           // pushes languages into the flags array, without duplicating them
-          this.movies.forEach((item) => {
+          this.movies.forEach(item => {
+
+            this.flags = [];
+
             if (!this.flags.includes(item.original_language)) {
               this.flags.push(item.original_language)
             }
           });
-          this.movies.forEach((item) => {
-            this.index = 0
 
-              if (this.index !== item.id) {
-                return this.index ++;
-              }
+          // gets the firsts 5 cast names
+          this.movies.forEach(item => {
+
+            this.movies = []; // emptying array, otherwise it would duplicate movies
+
+            let cast = [];
+            axios
+              .get(`https://api.themoviedb.org/3/movie/${item.id}/credits?`, {
+                 params: {
+                    api_key: this.api_key
+                 }
+               })
+               .then(resp =>{
+                 resp.data.cast.slice(0, 5).forEach(item => {
+                   cast.push(item.name);
+                 });
+                 item.cast = cast.toString();
+                 this.movies.push(item);  // pushing cast key into movies array
+               })
 
           });
 
         });
+
     },
     getTvSeries: function() {
 
       axios
         .get('https://api.themoviedb.org/3/search/tv', {
           params: {
-            api_key: '1a20e46ffbcbc0628119863e1c4600e8',
+            api_key: this.api_key,
             query: this.selected
           }
         })
@@ -60,9 +80,34 @@ var app = new Vue({
 
           // pushes languages into the flags array, without duplicating them
           this.tvSeries.forEach((item) => {
+
+            this.flags = [];
+
             if (!this.flags.includes(item.original_language)) {
               this.flags.push(item.original_language)
             }
+          });
+
+          // gets the firsts 5 cast names
+          this.tvSeries.forEach(item => {
+
+            this.tvSeries = []; // emptying array, otherwise it would duplicate tvSeries
+
+            let cast = [];
+            axios
+              .get(`https://api.themoviedb.org/3/movie/${item.id}/credits?`, {
+                 params: {
+                    api_key: this.api_key
+                 }
+               })
+               .then(resp =>{
+                 resp.data.cast.slice(0, 5).forEach(item => {
+                   cast.push(item.name);
+                 });
+                 item.cast = cast.toString();
+                 this.tvSeries.push(item);  // pushing cast key into tvSeries array
+               })
+
           });
 
         });
@@ -71,7 +116,6 @@ var app = new Vue({
       return Math.round(item / 2);
     },
     search: function() {
-
       if (this.selected !== '') {
         this.getMovies();
         this.getTvSeries();
@@ -79,12 +123,7 @@ var app = new Vue({
     },
     clicked: function() {
       this.isActive = !this.isActive;
-      this.isHidden = !this.isHidden;
-      this.isGrowing = !this.isGrowing;
     },
-
-
-
   },
   mounted() {
 
