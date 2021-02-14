@@ -10,21 +10,62 @@ body {
     background: #1E2D3B;
     max-width: 100vw;
     max-height: 100vh;
+    overflow-x: hidden;
+}
+
+ul {
+  list-style-type: none;
 }
 
 #app {
   margin: 20px;
 }
 
-.main-container {
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
+/* JS triggering class */
+.triggerLogo {
+  position: fixed;
+  left: 75px;
 }
+/* end JS triggering class */
+
+.grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* JS triggering class */
+.triggerGridContainer {
+  justify-content: flex-end;
+}
+/* end JS triggering class */
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  /* position: relative; */
+  top: 0;
+  bottom: 100%;
+  left: 0;
+  z-index: 1;
+}
+
+/* JS triggering class */
+.triggerMainContainer {
+  width: 90%;
+}
+/* end JS triggering class */
 
 header {
   justify-content: space-between;
-  margin: 0 55px;
+  margin: 0 55px 20px;
+  /* z-index: -1; */
+}
+
+.triggerHeader {
+  justify-content: flex-end;
 }
 
 header, .section-title {
@@ -37,9 +78,16 @@ header, .section-title {
 .section-title {
   justify-content: flex-start;
   color: #FFFFFF;
-  margin: 0 60px;
-
+  margin: 50px 0 0 60px;
 }
+
+/* JS triggering class */
+.triggerSectionTitle {
+  position: relative;
+  left: 215px;
+  margin: 20px 0 0 60px;
+}
+/* end JS triggering class */
 
 .select>.fa-search {
   color: #FFFFFF;
@@ -81,13 +129,6 @@ header, .section-title {
   border: 1px solid #fff;
 }
 
-.grid-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .content {
   display: flex;
   justify-content: center;
@@ -99,8 +140,8 @@ header, .section-title {
   background: #111;
   color: inherit;
   text-align: center;
+  overflow: hidden;
 }
-
 
 .poster-container {
   overflow: hidden;
@@ -161,10 +202,6 @@ header, .section-title {
   opacity: 0.09;
 }
 
-.info>ul {
-  list-style-type: none;
-
-}
 .info>ul>li {
   padding-bottom: 5px;
 }
@@ -176,3 +213,57 @@ header, .section-title {
 .fas, .far {
   color: #F9BB08;
 }
+
+/* sidebar */
+.fa-bars {
+  position: absolute;
+  font-size: 2em;
+  color: #fff;
+  left: 85px;
+  transition: all 500ms;
+  cursor: pointer;
+}
+
+aside {
+  position: fixed;
+  border-radius: 5px;
+  background-color: #111;
+  color: #fff;
+  width: 0;
+  height: 80%;
+  margin-top: 30px;
+  z-index: 1;
+  top: 120px;
+  left: 85px;
+  overflow: auto;
+}
+
+aside>h3 {
+  padding: 15px 0 0 15px;
+}
+
+aside>ul {
+  opacity: 0;
+}
+
+aside>ul>li {
+  padding: 15px;
+}
+/* JS triggering class */
+.listTrigger {
+  opacity: 1;
+}
+/* end JS triggering class */
+
+/* JS triggering class */
+.menuTrigger {
+  position: fixed;
+  transition: width 500ms;
+  width: 240px;
+  /* margin-top: 25px; */
+}
+/* end JS triggering class */
+
+
+
+/* end sidebar */

@@ -11,7 +11,11 @@ var app = new Vue({
     //images
     posterUrl: 'https://image.tmdb.org/t/p/w342',
     // dynamic classes
-    isActive: false,
+    toggledSearch: false,
+    toggledMenu: false,
+
+
+
 
   },
 
@@ -53,15 +57,38 @@ var app = new Vue({
                     api_key: this.api_key
                  }
                })
-               .then(resp =>{
+               .then(resp => {
                  resp.data.cast.slice(0, 5).forEach(item => {
                    cast.push(item.name);
                  });
                  item.cast = cast.toString();
                  this.movies.push(item);  // pushing cast key into movies array
                })
+          });
+
+          //gets genres ----------------------- NOT WORKING---------------------------------------------------
+          this.movies.forEach(item => {
+
+            this.movies = [];
+
+            let genre = [];
+            axios
+              .get('https://api.themoviedb.org/3/genre/movie/list?', {
+                 params: {
+                    api_key: this.api_key
+                 }
+               })
+               .then(resp => {
+                 resp.data.genres.forEach(item => {
+                   genre.push(item.name);
+                 });
+                 // item.genre = genre.toString();
+                 this.movies.push(item);
+
+               })
 
           });
+
 
         });
 
@@ -121,14 +148,20 @@ var app = new Vue({
         this.getTvSeries();
       }
     },
-    clicked: function() {
-      this.isActive = !this.isActive;
+    toggleSearch: function() {
+      this.toggledSearch = !this.toggledSearch;
+    },
+    toggleMenu: function() {
+      this.toggledMenu = !this.toggledMenu;
     },
   },
   mounted() {
 
+
   }
 
 });
+
+
 
 Vue.config.devtools = true;

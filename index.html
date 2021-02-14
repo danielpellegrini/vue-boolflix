@@ -19,14 +19,14 @@
 
 
     <!-- search bar -->
-    <header>
-      <div class="logo">
+    <header :class="{triggerHeader: toggledMenu}">
+      <div :class="{triggerLogo: toggledMenu}">
         <img src="img/logo.png" alt="Boolflix logo">
       </div>
       <div class="select"
-           :class="{active: isActive}">
+           :class="{active: toggledSearch}">
         <i class="fas fa-search"
-           @click="clicked()">
+           @click="toggleSearch()">
         </i>
         <input id="search-input"
                placeholder="Search a movie or a TV series"
@@ -37,10 +37,27 @@
     </header>
     <!-- end search bar -->
 
-    <!-- movies section -->
-    <div class="grid-container main-container">
+    <!-- sidebar -->
+    <i class="fas fa-bars"
+       :class="{menuTrigger: toggledMenu}"
+       @click="toggleMenu()"></i>
+    <aside :class="{menuTrigger: toggledMenu}">
+      <h3>Select a genre</h3>
+      <ul :class="{listTrigger: toggledMenu}">
+        <li>
+        </li>
+      </ul>
+    </aside>
+    <!-- end sidebar -->
 
-      <div class="section-title" v-if="movies != '' ">
+    <!-- movies section -->
+    <div class="grid-container main-container"
+         :class="{triggerMainContainer: toggledMenu,
+                  triggerGridContainer: toggledMenu}">
+
+      <div class="section-title"
+           v-if="movies != '' "
+           :class="{triggerSectionTitle: toggledMenu}">
         <h1>Movies</h1>
       </div>
       <div class="content" v-for="item in movies">
@@ -112,9 +129,13 @@
     <!-- end movies section -->
 
     <!-- tv series section -->
-    <div class="grid-container main-container">
+    <div class="grid-container main-container"
+         :class="{triggerMainContainer: toggledMenu,
+                 triggerGridContainer: toggledMenu}">
 
-      <div class="section-title" v-if="tvSeries != '' ">
+      <div class="section-title"
+           v-if="tvSeries != '' "
+           :class="{triggerSectionTitle: toggledMenu}">
         <h1>TV Series</h1>
       </div>
 
