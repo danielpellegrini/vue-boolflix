@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
   <link rel="stylesheet" href="css/style.css">
@@ -23,16 +25,16 @@
       <div :class="{triggerLogo: toggledMenu}">
         <img src="img/logo.png" alt="Boolflix logo">
       </div>
-      <div class="select"
+      <div class="select_boolflix"
            :class="{active: toggledSearch}">
         <i class="fas fa-search"
-           @click="toggleSearch()">
+           @click="toggleSearch(), toggleTrending()">
         </i>
         <input id="search-input"
                placeholder="Search a movie or a TV series"
                type="search"
                v-model="selected"
-               @keyup.enter="search()">
+               @input="search()">
       </div>
     </header>
     <!-- end search bar -->
@@ -41,22 +43,110 @@
     <i class="fas fa-bars"
        :class="{menuTrigger: toggledMenu}"
        @click="toggleMenu()"></i>
-    <aside :class="{menuTrigger: toggledMenu}">
+    <aside :class="{menuTrigger: toggledMenu}"  >
       <h3>Select a genre</h3>
-      <ul :class="{listTrigger: toggledMenu}">
+      <ul :class="{listTrigger: toggledMenu}" v-for="(item, index) in genres" :key="index">
         <li>
+          <a class="uppercase no_style" href="">{{item.name}}</a>
         </li>
       </ul>
     </aside>
     <!-- end sidebar -->
+
+
+    <section  class="grid-container main-container empty_container"
+             :class="{triggerNoContent: toggledNoContent}">
+      <h1 class="h1">Start typing to find your favorite movies and TV shows.</h1>
+    </section>
+
+
+
+    <!-- TRENDING MOVIES -->
+    <section class="grid-container main-container"
+             :class="{triggerMainContainer: toggledMenu, 
+                      triggerGridContainer: toggledMenu,
+                      triggerTrending: toggledTrending}">
+
+      <div class="section-title" 
+           :class="{triggerSectionTitle: toggledMenu}">
+        <h1 class="trending">Top 20 Movies</h1>
+      </div>
+      <div class="content" v-for="item in trendingMovies">
+        <!-- cards container -->
+        <div class="content-container">
+
+          <!-- info and overview -->
+            <div class="info">
+            <ul>
+              <li><span class="lowercase">Title: </span>{{item.title}}
+              </li>
+              <li><span>Original title: </span>{{item.original_title}}
+              </li>
+              <li><span>Original language: </span>
+                <span v-if="flags.includes(!item.original_language)">
+                  {{item.original_language}}
+                </span>
+                <span v-else>
+                  <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                </span>
+              </li>
+              <li>
+                <span>Vote:
+                <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
+                </i>
+                <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
+                </i>
+              </span>
+              </li>
+              <li>
+                <span>Overview: </span> {{item.overview}}
+              </li>
+              <li v-if="item.cast.length != 0">
+                <span>Cast: </span> {{item.cast}}
+              </li>
+              <li v-else="">
+                <span>Cast not provided</span>
+              </li>
+            </ul>
+          </div>
+          <!-- end info and overview -->
+
+          <!-- poster -->
+            <div class="poster-container hidden" v-if="item.poster_path != null">
+              <img class="poster" :src="posterUrl + item.poster_path" alt="">
+            </div>
+            <div class="poster-container poster-placeholder hidden" v-else="">
+            <div class="placeholder-container">
+              <img class="placeholder" src="img/logo.png" alt="Boolflix logo">
+              <ul>
+                <li>{{item.title}}</li>
+                <li><span>Language: </span>
+                  <span v-if="flags.includes(!item.original_language)">
+                    {{item.original_language}}
+                  </span>
+                  <span v-else>
+                    <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- end poster -->
+
+        </div>
+        <!-- end cards container -->
+      </div>
+    
+    </section>
+    <!-- /TRENDING MOVIES -->
 
     <!-- movies section -->
     <div class="grid-container main-container"
          :class="{triggerMainContainer: toggledMenu,
                   triggerGridContainer: toggledMenu}">
 
-      <div class="section-title"
-           v-if="movies != '' "
+      <div class="section-title" 
+           v-if="movies != '' "          
            :class="{triggerSectionTitle: toggledMenu}">
         <h1>Movies</h1>
       </div>
@@ -128,13 +218,92 @@
     </div>
     <!-- end movies section -->
 
+    <!-- TRENDING TV SERIES -->
+    <section class="grid-container main-container"
+             :class="{triggerMainContainer: toggledMenu, 
+                      triggerGridContainer: toggledMenu,
+                      triggerTrending: toggledTrending}">
+
+      <div class="section-title" 
+           :class="{triggerSectionTitle: toggledMenu}">
+        <h1 class="trending">Top 20 TV Series</h1>
+      </div>
+      <div class="content" v-for="item in trendingTv">
+        <!-- cards container -->
+        <div class="content-container">
+
+          <!-- info and overview -->
+            <div class="info">
+            <ul>
+              <li><span>Title: </span>{{item.title}}
+              </li>
+              <li><span>Original title: </span>{{item.original_title}}
+              </li>
+              <li><span>Original language: </span>
+                <span v-if="flags.includes(!item.original_language)">
+                  {{item.original_language}}
+                </span>
+                <span v-else>
+                  <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                </span>
+              </li>
+              <li>
+                <span>Vote:
+                <i v-for="item in voteAverage(item.vote_average)" class="fas fa-star">
+                </i>
+                <i v-for="item in (5 - voteAverage(item.vote_average))" class="far fa-star">
+                </i>
+              </span>
+              </li>
+              <li>
+                <span>Overview: </span> {{item.overview}}
+              </li>
+              <li v-if="item.cast.length != 0">
+                <span>Cast: </span> {{item.cast}}
+              </li>
+              <li v-else="">
+                <span>Cast not provided</span>
+              </li>
+            </ul>
+          </div>
+          <!-- end info and overview -->
+
+          <!-- poster -->
+            <div class="poster-container hidden" v-if="item.poster_path != null">
+              <img class="poster" :src="posterUrl + item.poster_path" alt="">
+            </div>
+            <div class="poster-container poster-placeholder hidden" v-else="">
+            <div class="placeholder-container">
+              <img class="placeholder" src="img/logo.png" alt="Boolflix logo">
+              <ul>
+                <li>{{item.title}}</li>
+                <li><span>Language: </span>
+                  <span v-if="flags.includes(!item.original_language)">
+                    {{item.original_language}}
+                  </span>
+                  <span v-else>
+                    <img class="flag" :src="'img/flags/' + item.original_language + '.png'">
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- end poster -->
+
+        </div>
+        <!-- end cards container -->
+      </div>
+    
+    </section>
+    <!-- /TRENDING TV SERIES -->
+
     <!-- tv series section -->
     <div class="grid-container main-container"
          :class="{triggerMainContainer: toggledMenu,
                  triggerGridContainer: toggledMenu}">
 
       <div class="section-title"
-           v-if="tvSeries != '' "
+            v-if="tvSeries != '' "
            :class="{triggerSectionTitle: toggledMenu}">
         <h1>TV Series</h1>
       </div>

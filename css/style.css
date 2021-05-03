@@ -52,6 +52,17 @@ ul {
   z-index: 1;
 }
 
+.empty_container {
+  margin: 0 auto;
+  line-height: 25rem;
+}
+
+.h1 {
+  font-size: 3rem;
+  color: white;
+  font-weight: lighter;
+}
+
 /* JS triggering class */
 .triggerMainContainer {
   width: 90%;
@@ -81,6 +92,10 @@ header, .section-title {
   margin: 50px 0 0 60px;
 }
 
+.trending {
+  font-size: 2rem;
+}
+
 /* JS triggering class */
 .triggerSectionTitle {
   position: relative;
@@ -89,7 +104,7 @@ header, .section-title {
 }
 /* end JS triggering class */
 
-.select>.fa-search {
+.select_boolflix>.fa-search {
   color: #FFFFFF;
   cursor: pointer;
   font-size: 1.7em;
@@ -97,7 +112,7 @@ header, .section-title {
   position: absolute;
 }
 
-.select {
+.select_boolflix {
   background: #1E2D3B;
   padding: .5rem 1rem;
   position: relative;
@@ -247,8 +262,27 @@ aside>ul {
 }
 
 aside>ul>li {
-  padding: 15px;
+  margin: 25px 0;
+  padding: 0 15px;
 }
+.no_style{
+  text-decoration: none;
+  color: white;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.triggerTrending {
+  display: none;
+}
+
+.triggerNoContent {
+  display: none;
+}
+
+
 /* JS triggering class */
 .listTrigger {
   opacity: 1;
