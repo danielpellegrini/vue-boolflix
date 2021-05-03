@@ -117,7 +117,7 @@ var app = new Vue({
         });
     },
 
-        getTrendingMovies() {
+    getTrendingMovies() {
       axios
         .get('https://api.themoviedb.org/3/trending/movie/week?', {
         params: {
@@ -136,6 +136,7 @@ var app = new Vue({
             if (!this.flags.includes(item.original_language)) {
               this.flags.push(item.original_language)
             }
+
           });
         
 
@@ -228,9 +229,13 @@ var app = new Vue({
     },
 
     search() {
-      if (this.selected !== '') {
+      if (this.selected !== '' || this.selected === ' ') {
         this.getMovies();
         this.getTvSeries();
+      } else {
+        this.movies = [];
+        this.tvSeries = [];
+        this.flags = [];
       }
     },
 
@@ -238,6 +243,8 @@ var app = new Vue({
 
     toggleSearch () {
       this.toggledSearch = !this.toggledSearch;
+      this.movies = [];
+      this.tvSeries = [];
     },
 
     toggleMenu () {

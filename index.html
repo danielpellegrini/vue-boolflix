@@ -34,7 +34,8 @@
                placeholder="Search a movie or a TV series"
                type="search"
                v-model="selected"
-               @input="search()">
+               @input="search()"
+               @keyup.enter="search()">
       </div>
     </header>
     <!-- end search bar -->
@@ -54,9 +55,10 @@
     <!-- end sidebar -->
 
 
-    <section  class="grid-container main-container empty_container"
+    <section  
+    class="grid-container main-container empty_container"
              :class="{triggerNoContent: toggledNoContent}">
-      <h1 class="h1">Start typing to find your favorite movies and TV shows.</h1>
+      <h1 v-if="movies == '' " class="h1">Start typing to find your favorite movies and TV shows.</h1>
     </section>
 
 
