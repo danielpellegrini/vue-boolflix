@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
   <link rel="stylesheet" href="css/style.css">
 
@@ -22,9 +24,20 @@
 
     <!-- search bar -->
     <header :class="{triggerHeader: toggledMenu}">
-      <div :class="{triggerLogo: toggledMenu}">
-        <img src="img/logo.png" alt="Boolflix logo">
-      </div>
+        <div class="red_boolflix" :class="{triggerLogo: toggledMenu}">
+          <!-- <img class="logo" :class="{resizeLogo: toggledSearch}" src="img/logo.png" alt="Boolflix logo">  -->
+          <div class="logo">
+            <span>B</span>         
+            <span>O</span>         
+            <span>O</span>         
+            <span>L</span>         
+            <span>F</span>         
+            <span>L</span>         
+            <span>I</span>         
+            <span>X</span>         
+          </div>
+        </div>
+
       <div class="select_boolflix"
            :class="{active: toggledSearch}">
         <i class="fas fa-search"
@@ -54,14 +67,12 @@
     </aside>
     <!-- end sidebar -->
 
-
-    <section  
-    class="grid-container main-container empty_container"
+    <section class="container"
              :class="{triggerNoContent: toggledNoContent}">
-      <h1 v-if="movies == '' " class="h1">Start typing to find your favorite movies and TV shows.</h1>
+      <div class="row">
+        <h1 v-if="movies == '' " class="h1 col-xl-12 mt-5">Start typing to find your favorite movies and TV shows.</h1>
+      </div>
     </section>
-
-
 
     <!-- TRENDING MOVIES -->
     <section class="grid-container main-container"
