@@ -16,7 +16,8 @@ var app = new Vue({
     toggledSearch: false,
     toggledMenu: false,
     toggledTrending: false,
-    toggledNoContent: true
+    toggledNoContent: true,
+    loading: true
   },
 
 
@@ -34,6 +35,7 @@ var app = new Vue({
         .then(resp => {
 
           this.movies = resp.data.results;
+          
 
           // pushes languages into the flags array, without duplicating them
           this.movies.forEach(item => {
@@ -65,6 +67,7 @@ var app = new Vue({
                 this.movies.push(item); // pushing cast key into movies array
               })
           });
+          this.loading = false;
 
         })
         
@@ -81,6 +84,7 @@ var app = new Vue({
         })
         .then((resp) => {
           this.tvSeries = resp.data.results;
+          this.loading = false;
 
           // pushes languages into the flags array, without duplicating them
           this.tvSeries.forEach((item) => {
@@ -126,6 +130,7 @@ var app = new Vue({
       })
         .then(resp => {
           this.trendingMovies = resp.data.results;
+          
 
           
           // pushes languages into the flags array, without duplicating them
@@ -159,6 +164,7 @@ var app = new Vue({
                 this.trendingMovies.push(item); // pushing cast key into trendingMovies array
               })
           });
+          this.loading = false;
 
         })
 
@@ -212,18 +218,6 @@ var app = new Vue({
       
     },
 
-    getGenres() {
-      axios
-        .get('https://api.themoviedb.org/3/genre/movie/list?', {
-        params: {
-          api_key: this.api_key
-        }
-      })
-        .then(resp => {
-          this.genres = resp.data.genres;
-        })
-    },
-
     voteAverage (item) {
       return Math.round(item / 2);
     },
@@ -256,13 +250,12 @@ var app = new Vue({
       this.toggledNoContent = !this.toggledNoContent;
     },
 
+
   },
   
   mounted() {
-    this.getGenres();
     this.getTrendingMovies();
-    this.getTrendingTv();
-    
+    this.getTrendingTv();   
 
   }
 
