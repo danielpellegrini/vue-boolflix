@@ -92,8 +92,9 @@ ul {
 /* end JS triggering class */
 
 header {
+  width: 100%;
+  padding: 25px;
   justify-content: space-between;
-  margin: 0 55px 20px;
   position: sticky;
   top: -1px;
   z-index: 3;
@@ -105,13 +106,13 @@ header {
 }
 
 header, .section-title {
-    width: calc(100% - 55px);
-    height: 100px;
-    display: flex;
-    align-items: center;
+  height: 100px;
+  display: flex;
+  align-items: center;
 }
 
 .section-title {
+  width: calc(100% - 55px);
   justify-content: flex-start;
   color: #FFFFFF;
   margin: 50px 0 0 60px;
@@ -196,7 +197,7 @@ header, .section-title {
 
   .active {
     transition: all 0.5s;
-    width: 400px;
+    width: 360px;
     top: 0;
     left: 0;
     opacity: 1;
